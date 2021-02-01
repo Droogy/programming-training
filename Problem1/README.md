@@ -9,3 +9,13 @@ Scenario
 > But I do not remember an order of these elements.  
 > You have to find a list of all possible passwords, based on this information.  
 > There are ~936 of them.  
+---
+
+### Usage
+``` python
+# run with -c followed by a number to specify the length of your custom list
+
+python ./solution2.py -c 10 # specify to add a custom list with 10 words
+
+# press enter after each entry - it will prompt until your specified number is done
+```
