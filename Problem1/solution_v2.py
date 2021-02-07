@@ -6,7 +6,6 @@ names = ['jake', 'melissa', 'oliver', 'emily']
 years = ['1987', '1954', '1963']
 symbols = ['!','@','#','$','%','&','*','-','=','_','+','.',',']
 
-
 # user input list
 a = []
 # check if we have cmd line args
@@ -20,24 +19,34 @@ if len(sys.argv) > 1:
             a.append(element)
 else:
     pass
-# debug user input list
-print("user list is: " +str(a))
-
-# debug user list
-#a = ['aaa', 'bbb', 'ccc']
 
 # initialize all the lists
 list_of_lists = [a, names, years, symbols]
-# iterate over each list element, but in place, not the permutation we need
-list_iterator = list(itertools.product(*list_of_lists))
-# join together the tuples into one string
-final_list = [''.join(tups) for tups in list_iterator]
+master_pass = []
+# permy does all the heavy lifting
+def permy(single):
+    # itertools magic to iterate over combinations
+    list_iterator = list(itertools.product(*single))
+    # join together tuple elements to form a password
+    final_list = [''.join(tups) for tups in list_iterator]
+    # add each password to a master list
+    for i in final_list:
+        master_pass.append(i)
 
-# print passwords to file
-with open('passwords.txt', 'w') as x:
-    for password in final_list:
-        # new line for each item in final list
-        x.write('%s\n' %password)
+# at this point, each list is initialized as tuples
+# res changes the position of each list in the list of lists
+res = itertools.permutations(list_of_lists)
 
-# debug list
-print(final_list)
+# this loops over each permutation and runs permy against it which 
+# generates our passwords 
+for x in res:
+    permy(x)
+
+# write passwords to file we can use
+with open('all_passwords.txt', 'w') as x:
+    for password in master_pass:
+        x.write(f'{password}\n')
+
+# debug master list
+#for x in master_pass:
+#    print(x)
